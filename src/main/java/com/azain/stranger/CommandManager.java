@@ -23,13 +23,13 @@ public class CommandManager {
     public CommandManager() {
         addCommand(new PingCommand());
         addCommand(new HelpCommand(this));
-        addCommand(new PasteCommand());
-        addCommand(new HasteCommand());
+        //addCommand(new PasteCommand());
+        //addCommand(new HasteCommand());
         addCommand(new KickCommand());
         addCommand(new MemeCommand());
         addCommand(new WebhookCommand());
         addCommand(new UserInfoCommand());
-        addCommand(new InstagramCommand());
+        //addCommand(new InstagramCommand());
         addCommand(new MinecraftCommand());
         addCommand(new WeatherCommand());
         addCommand(new SetPrefixCommand());

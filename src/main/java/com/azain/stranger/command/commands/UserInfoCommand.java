@@ -13,12 +13,14 @@ import java.time.format.DateTimeFormatter;
 public class UserInfoCommand implements ICommand
 {
     static DateTimeFormatter format = DateTimeFormatter.ofPattern("E, MMM d, u H:m a");
-    User user;
-    Member member;
+
     @Override
     public void handle(CommandContext ctx)
     {
-        TextChannel channel = ctx.getChannel();
+        final User user;
+        final Member member;
+        final TextChannel channel = ctx.getChannel();
+
         if(ctx.getMessage().getMentionedUsers().isEmpty() && ctx.getMessage().getMentionedMembers().isEmpty())
         {
             user = ctx.getAuthor();

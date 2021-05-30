@@ -30,10 +30,12 @@ public class WeatherRequest
         this.response = request();
     }
 
+
     public HttpResponse<String> getResponse()
     {
         return this.response;
     }
+
 
     private HttpResponse<String> request() throws IOException, InterruptedException {
         long timestamp = new Date().getTime() / 1000;
