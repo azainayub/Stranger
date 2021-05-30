@@ -3,7 +3,6 @@ package com.azain.stranger;
 import com.azain.stranger.command.CommandContext;
 import com.azain.stranger.command.ICommand;
 import com.azain.stranger.command.commands.*;
-import com.azain.stranger.command.commands.amongus.StartCommand;
 import com.azain.stranger.command.commands.admin.SetPrefixCommand;
 import com.azain.stranger.command.commands.music.JoinCommand;
 import com.azain.stranger.command.commands.music.LeaveCommand;
@@ -36,7 +35,6 @@ public class CommandManager {
         addCommand(new SetPrefixCommand());
         addCommand(new JokeCommand());
         addCommand(new LeaveCommand());
-        addCommand(new StartCommand());
         addCommand(new JoinCommand());
         addCommand(new PlayCommand());
         addCommand(new StopCommand());
@@ -69,9 +67,9 @@ public class CommandManager {
         return null;
     }
 
-    void handle(GuildMessageReceivedEvent event) throws IOException, InterruptedException{
+    void handle(GuildMessageReceivedEvent event, String prefix) throws IOException, InterruptedException {
         String[] split = event.getMessage().getContentRaw()
-                .replaceFirst("(?i)" + Pattern.quote(Config.get("prefix")), "")
+                .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s+");
 
         String invoke = split[0].toLowerCase();
@@ -86,5 +84,6 @@ public class CommandManager {
             cmd.handle(ctx);
         }
     }
+    }
 
-}
+

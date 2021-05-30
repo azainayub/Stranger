@@ -1,6 +1,5 @@
 package com.azain.stranger;
 
-import com.azain.stranger.database.DatabaseManager;
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import me.duncte123.botcommons.web.WebUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -14,7 +13,6 @@ import java.util.EnumSet;
 
 public class Bot {
     private Bot() throws LoginException {
-        DatabaseManager.INSTANCE.getPrefix(-1);
         WebUtils.setUserAgent("Stranger#5251 /  Azain#6729");
         EmbedUtils.setEmbedBuilder(
                 () -> new EmbedBuilder()
@@ -26,14 +24,15 @@ public class Bot {
                 Config.get("token"),
                 GatewayIntent.GUILD_MEMBERS,
                 GatewayIntent.GUILD_MESSAGES,
-                GatewayIntent.GUILD_VOICE_STATES
+                GatewayIntent.GUILD_VOICE_STATES,
+                GatewayIntent.GUILD_PRESENCES
         )
                 .disableCache(EnumSet.of(
                         CacheFlag.CLIENT_STATUS,
-                        CacheFlag.ACTIVITY,
                         CacheFlag.EMOTE
                 ))
-                .enableCache(CacheFlag.VOICE_STATE)
+                .enableCache(CacheFlag.VOICE_STATE,
+                        CacheFlag.ACTIVITY)
                 .addEventListeners(new Listener())
                 .setActivity(Activity.streaming("=help", "https://twitch.tv/azain.ayub"))
                 .build();

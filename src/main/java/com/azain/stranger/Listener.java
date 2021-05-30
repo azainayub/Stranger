@@ -1,5 +1,6 @@
 package com.azain.stranger;
 
+import com.azain.stranger.database.DatabaseManager;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -29,7 +30,8 @@ public class Listener extends ListenerAdapter {
             return;
         }
 
-        String prefix = Config.get("prefix");
+        final long guildId = event.getGuild().getIdLong();
+        String prefix = VeryBadDesign.PREFIXES.computeIfAbsent(guildId, DatabaseManager.INSTANCE::getPrefix);
         String raw = event.getMessage().getContentRaw();
 
         if (raw.equalsIgnoreCase(prefix + "shutdown")
@@ -41,10 +43,12 @@ public class Listener extends ListenerAdapter {
             return;
         }
 
-        if (raw.startsWith(prefix)){
+        if (raw.startsWith(prefix)) {
             try {
-                manager.handle(event);
-            } catch (IOException | InterruptedException e) {
+                manager.handle(event, prefix);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

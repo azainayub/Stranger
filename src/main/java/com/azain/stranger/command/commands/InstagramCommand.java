@@ -16,7 +16,6 @@ public class InstagramCommand implements ICommand {
     public void handle(CommandContext ctx) {
         final List<String> args = ctx.getArgs();
         final TextChannel channel = ctx.getChannel();
-
         if (args.isEmpty()) {
             channel.sendMessage("You must provide a username to look up").queue();
             return;

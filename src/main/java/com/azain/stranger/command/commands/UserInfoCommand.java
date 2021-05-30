@@ -9,8 +9,10 @@ import net.dv8tion.jda.api.entities.User;
 
 import java.time.format.DateTimeFormatter;
 
+
 public class UserInfoCommand implements ICommand
 {
+    static DateTimeFormatter format = DateTimeFormatter.ofPattern("E, MMM d, u H:m a");
     User user;
     Member member;
     @Override
@@ -30,22 +32,11 @@ public class UserInfoCommand implements ICommand
         }
 
         EmbedBuilder userinfo = new EmbedBuilder();
-
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("E, MMM d, u H:m a");
-
         userinfo.setTitle(user.getAsTag(), user.getAvatarUrl());
         userinfo.addField("**Joined Discord at**", user.getTimeCreated().format(format) , true);
         userinfo.addField("**Joined Server at**", member.getTimeJoined().format(format), true);
-        //userinfo.addField("**Permissions**", member.getPermissions().toString() , true);
         userinfo.addField("**Online Status**", member.getOnlineStatus().toString().toLowerCase() , true);
-        String boostingStatus = "Not Boosting";
-
-        if(member.getTimeBoosted() != null)
-        {
-            boostingStatus = member.getTimeBoosted().format(format);
-        }
-
-        userinfo.addField("**Boosting Since**", boostingStatus , true);
+        userinfo.addField("**Boosting Since**", member.getTimeBoosted() != null? member.getTimeBoosted().format(format) : "Not boosting", true);
         userinfo.setThumbnail(user.getAvatarUrl());
         userinfo.setColor(0xf45642);
         userinfo.setFooter("Requested by " + ctx.getMessage().getAuthor().getAsTag() , ctx.getMember().getUser().getAvatarUrl());
